@@ -1,0 +1,5 @@
+- go to 'https://cryptii.com/pipes/caesar-cipher'
+- give it the content of the file '/usr/sbin/john' which is 'cdiiddwpgswtgt'
+- use the key 11 and get 'nottoohardhere' which is the pass for flag00
+
+that wasnt too hard
