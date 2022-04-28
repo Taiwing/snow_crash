@@ -1,0 +1,12 @@
+- scp pcap file on host machine
+- open with wireshark to see the packet history
+- check TCP payloads for clear text
+- see login:
+- then some other stuff
+- then Password:
+- and see these weird one byte payloads
+- take each one to build the password
+- then see some '7f' bytes which are del characters
+  which means the guy messed up while typing, so erase
+  as many characters as there are '7f' chars
+- reach the '0d'/form feed character and the password is complete !
