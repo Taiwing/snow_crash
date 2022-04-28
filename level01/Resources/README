@@ -1,0 +1,3 @@
+- get DES crypt() password hash of flag01 from /etc/passwd
+- put it in a file: echo hash > pass
+- pass the file to our friend john the ripper: john pass --show
