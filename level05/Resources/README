@@ -1,0 +1,8 @@
+The file /usr/sbin/openarenaserver is a bash script and it reads from the
+/opt/openarenaserver directory to execute every script in it and delete them.
+
+Since user level05 has rwx access to the directory, simply create a script that
+will call getflag and redirect the output into a file in the same directory.
+
+The script is deleted after execution so you should be fast before the cronjob
+(probably) removes the result file. That's it, enjoy your flag.
