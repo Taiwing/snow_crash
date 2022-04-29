@@ -1,0 +1,6 @@
+Well... This one was REALLY easy :D
+
+The binary takes the env variable LOGNAME and directly puts it in the string
+given to system(). So just set the delimiter and call getflag as usual.
+
+env LOGNAME='lol im gonna pown you ez; getflag' ./level07
