@@ -1,0 +1,4 @@
+#!/bin/bash
+
+/usr/bin/id
+/bin/getflag

