@@ -1,0 +1,19 @@
+welll that was easy
+
+The perl script is a CGI file, it is used to render web pages dynamically.
+The corresponding page, as it is nicely pointed out by the comment, is served
+on localhost:4747. So just connect to <snow_crash_ip>:4747 in the brower to
+access it.
+
+There is nothing to be shown right now. But like in the last exercise, the perl
+script has the suid bit on and belongs to flag04. In it I can see a backtick
+syntax with an echo command and what looks like variable substitution with '$y'.
+
+Basically, just give 'x=something' as a get paramter to the page to see
+'something' in it through the echo command.
+
+Since it's a shell command just pass ';getflag' to it. Like this:
+
+<snow_crash_ip>:4747/?x=%3bgetflag
+
+Where '3b' is the ascii hexcode for ';'. Then see the token :)
