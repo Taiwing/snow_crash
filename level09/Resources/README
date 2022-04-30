@@ -1,0 +1,9 @@
+The objective seems to be loading a malicious library that will do the job to
+execute getflag.
+
+- ptrace is called, so no strace/ptrace/debugger magic
+- LD_PRELOAD is checked, so probably no loading the lib that way
+- /etc/ld.so.preload is checked too, and I dont have rights to /etc anyway
+
+- this leaves only /proc/self/maps to do the job it would seem, but the file is
+  not directly modfiable too, so it would seem to require a cleverer trick
