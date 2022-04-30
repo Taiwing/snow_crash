@@ -19,4 +19,11 @@ execute getflag.
   static... hmmm
 - since its only for one process ('self', once again it makes sense), lets see
   what the file is when level09 opens it, even with gdb I think this could be
-  interesting
+  interesting. Actually it must be the same as /proc/<pid>/maps where <pid> is
+  the PID of the level09 process.
+
+I AM FUCKING STUPID
+
+The token is readable, so just reverse the fucker because ./level09 has been
+used to 'encrypt' it. Then boom you get the level09 pass. I am so dumb. I did
+not even check the token file. Anyway, that was an easy one too.
