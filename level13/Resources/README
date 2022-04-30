@@ -1,0 +1,10 @@
+Well this one is so easy I dont understand...
+
+Well simply launch the binary with the debugger:
+
+gcc ./level14
+
+Break in main and dissassemble. Then set the next breakpoint just after the
+first getuid call. Simply set the output register, eax, to 4242 and continue.
+
+Then you get the token. You can connect to level14 directly with it.
