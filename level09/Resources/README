@@ -7,3 +7,16 @@ execute getflag.
 
 - this leaves only /proc/self/maps to do the job it would seem, but the file is
   not directly modfiable too, so it would seem to require a cleverer trick
+
+ Ideas:
+
+- there are what appears to be empty anonymous memory regions listed in the
+  file, maybe they can be used to load an .so object (but how ? gets overflow?)
+- the file is of size 0 which is... weird i dont really get it since I can open
+  it and read it
+- Ohhhh ok it's accessible to process reading it, thats why the weird /bin/cat
+  calls... it makes sense actually, but still. This means the contents are not
+  static... hmmm
+- since its only for one process ('self', once again it makes sense), lets see
+  what the file is when level09 opens it, even with gdb I think this could be
+  interesting
