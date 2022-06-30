@@ -156,7 +156,7 @@ The perl script at the root the home is a CGI file. It is used to render web
 pages dynamically. The corresponding page, as it is nicely pointed out by the
 comment in the script, is served on localhost:4747.
 
-> If you are using the `vm\_launch.bash` script, the 4747 is mapped to 3333, so
+> If you are using the `vm_launch.bash` script, the 4747 is mapped to 3333, so
 > you can see the page on localhost:3333.
 
 There is nothing to be showed right now. But like in the last exercise, the perl
