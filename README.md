@@ -21,9 +21,9 @@ The password for the user flag00 is located in the file `/usr/sbin/john`. It is
 a plaintext file containing a string encrypted with a
 [caesar cipher](https://en.wikipedia.org/wiki/Caesar_cipher). This is a classic
 and simple symetric encryption scheme which uses a key for rotating the
-characters in a text. Here the key is 11. This is means that each letter in the
-text has been shifted on the right eleven times. To decrypt the password we need
-to do the inverse operation, which is a left shift of the same value.
+characters in a text. Here the key is -11. This is means that each letter in the
+text has been shifted on the left eleven times. To decrypt the password we need
+to do the inverse operation, which is a right shift of the same value.
 
 | Cipher | c | d | i | i | d | d | w | p | g | s | w | t | g | t |
 |:------:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
