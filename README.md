@@ -149,3 +149,25 @@ Which will output:
 uid=3003(flag03) gid=2003(level03) groups=3003(flag03),100(users),2003(level03)
 Check flag.Here is your token : qi0maab88jeaj46qoumi7maus
 ```
+
+## CGI bad (level04)
+
+The perl script at the root the home is a CGI file. It is used to render web
+pages dynamically. The corresponding page, as it is nicely pointed out by the
+comment in the script, is served on localhost:4747.
+
+> If you are using the `vm\_launch.bash` script, the 4747 is mapped to 3333, so
+> you can see the page on localhost:3333.
+
+There is nothing to be showed right now. But like in the last exercise, the perl
+script has the setuid bit on and belongs to flag04. In it we can see a backtick
+syntax with an echo command and what looks like variable substitution with '$y'.
+
+Just give 'x=something' as a get parameter to the page to see 'something' in it
+through the echo command. Since it's a shell command just pass ';getflag' to it:
+
+```
+http://localhost:3333/?x=%3bgetflag
+```
+
+Where '3b' is the ascii hexcode for ';'. Then see the token on the page :)
