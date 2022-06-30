@@ -35,7 +35,7 @@ The second level is as simple as running john the ripper on flag01's password
 hash, as it is subtly hinted at by the first level's password filename.
 
 ```shell
-# copy the passwd file from the virtual machine
+# copy the passwd file from the virtual machine (with level00 as a password)
 scp -P 2222 level00@localhost:/etc/passwd .
 # pass it through john the ripper
 john --show passwd
@@ -55,3 +55,33 @@ password. It is based on a modified version of
 [DES](https://en.wikipedia.org/wiki/Data_Encryption_Standard) to turn it into a
 one-way function but it is not secure anymore, especially when the password is
 as simple as it is here.
+
+## Wireshark packet dump (level02)
+
+Here you have a .pcap file at the root of the home directory. This contains a
+list of TCP packets captured with wireshark. The password is contained in the
+payloads of the TCP packets after the `Password:` string (which is really a
+prompt). Each TCP payload is one byte long and represents an input from the user
+logging in to this insecure online service. The input ends with a 0x0d, which is
+a form feed character meaning that the input is done.
+
+To read the file simply copy it from the virtual machine and open it with
+wireshark.
+
+```shell
+# copy the file from the vm (with the flag from the last level)
+scp -P 2222 level02@localhost:~/level02.pcap .
+# change its permissions to open it
+chmod 644 level02.pcap
+# read it with wireshark
+wireshark level02.pcap
+```
+
+> If you dont have wireshark or cannot install it (like on 42's machines), just
+> use the tshark.bash script in level02's Resources directory. It will read it
+> and print each TCP payload from the pcap file: `./tshark.bash`.
+
+Note that some of the payloads of the password are 0x7f. This is the DEL
+character, which means the user screwed up and deleted part of his input. So _n_
+preceding characters need to be deleted, where _n_ is the number of DEL in a
+row. The final password is: `ft_waNDReL0L`.
