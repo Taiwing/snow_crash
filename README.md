@@ -266,3 +266,51 @@ su flag08
 # get the flag
 getflag
 ```
+
+## The ultimate cipher (level09)
+
+The home looks like the preceding level except that the token file is readable.
+Here the binary is executing a "cipher" on a string it is given as an argument.
+The cipher is pretty simple. It takes every character of the string and
+increments it by its index.
+
+The trick here is that the token file is the result of this operation. Which
+means we have to reverse the process to get the token. So all we have to do is
+to copy this file to the vm, compile it and run the token file through it.
+
+```C
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(int argc, char **argv)
+{
+	if (argc < 2)
+	{
+		fprintf(stderr, "%s: missing argument\n", argv[0]);
+		return (EXIT_FAILURE);
+	}
+
+	char *arg = argv[1];
+	for (int i = 0; arg[i]; ++i)
+		putchar(arg[i] - i);
+	putchar('\n');
+	return (EXIT_SUCCESS);
+}
+```
+
+So this should get us there:
+
+```shell
+# change permissions for convenience (in the vm)
+chmod 755 .
+# copy the reverse file to the vm (on the host)
+scp -P 2222 level09/reverse.c level09@localhost:~/
+# compile it (on the vm)
+gcc -std=c99 reverse.c
+# execute it on the file contents
+./a.out "$(cat token)"
+# log as flag09 with the token
+su flag09
+# get the flag
+getflag
+```

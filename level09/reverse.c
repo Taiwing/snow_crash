@@ -12,5 +12,6 @@ int main(int argc, char **argv)
 	char *arg = argv[1];
 	for (int i = 0; arg[i]; ++i)
 		putchar(arg[i] - i);
+	putchar('\n');
 	return (EXIT_SUCCESS);
 }
