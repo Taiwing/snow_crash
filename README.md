@@ -28,3 +28,28 @@ to do the inverse operation, which is a left shift of the same value.
 | Cipher | c | d | i | i | d | d | w | p | g | s | w | t | g | t |
 |:------:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 | Plain  | n | o | t | t | o | o | h | a | r | d | h | e | r | e |
+
+## Broken DES (level01)
+
+The second level is as simple as running john on flag01's password hash, as it
+is subtly hinted at by the first level's password filename.
+
+```shell
+# copy the passwd file from the virtual machine
+scp -P 2222 level00@localhost:/etc/passwd .
+# pass it through john the ripper
+john --show passwd
+```
+
+This should output something like that:
+
+```
+flag01:abcdefg:3001:3001::/home/flag/flag01:/bin/bash
+
+1 password hash cracked, 0 left
+```
+
+Where `abcdefg` is password for flag01. It works because here the legacy unix
+password hashing function `crypt` is used for encrypting the user's password. It
+is based on a modified version of DES to turn it into a one-way function but it
+is not secure anymore, especially when the password is as simple as it is here.
