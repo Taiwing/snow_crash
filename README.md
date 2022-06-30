@@ -31,8 +31,8 @@ to do the inverse operation, which is a left shift of the same value.
 
 ## Broken DES (level01)
 
-The second level is as simple as running john on flag01's password hash, as it
-is subtly hinted at by the first level's password filename.
+The second level is as simple as running john the ripper on flag01's password
+hash, as it is subtly hinted at by the first level's password filename.
 
 ```shell
 # copy the passwd file from the virtual machine
