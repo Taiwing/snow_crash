@@ -49,7 +49,8 @@ flag01:abcdefg:3001:3001::/home/flag/flag01:/bin/bash
 1 password hash cracked, 0 left
 ```
 
-Where `abcdefg` is password for flag01. It works because here the legacy unix
-password hashing function `crypt` is used for encrypting the user's password. It
-is based on a modified version of DES to turn it into a one-way function but it
-is not secure anymore, especially when the password is as simple as it is here.
+Where `abcdefg` is the password for flag01. It works because here the legacy
+unix password hashing function `crypt` is used for encrypting the user's
+password. It is based on a modified version of DES to turn it into a one-way
+function but it is not secure anymore, especially when the password is as simple
+as it is here.
