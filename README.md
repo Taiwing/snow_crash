@@ -62,7 +62,7 @@ Here you have a .pcap file at the root of the home directory. This contains a
 list of TCP packets captured with wireshark. The password is contained in the
 payloads of the TCP packets after the `Password:` string (which is really a
 prompt). Each TCP payload is one byte long and represents an input from the user
-logging in to this insecure online service. The input ends with a 0x0d, which is
+logging into this insecure online service. The input ends with a 0x0d, which is
 a form feed character meaning that the input is done.
 
 To read the file simply copy it from the virtual machine and open it with
