@@ -193,7 +193,7 @@ while [ ! -f /tmp/flag ]; do sleep 1; done; cat /tmp/flag
 ## Breaking out of PHP regex hell (level06)
 
 The level06 is a setuid binary that takes two arguments and passes them to an
-overly convoluted php script that is executes. It has a regex with the '\e'
+overly convoluted php script that it executes. It has a regex with the '\e'
 option, which means it evaluates the code inside it as php code and executes it.
 So this is our obvious way in. The less obvious thing is to find what the
 arguments are to exploit the script.
