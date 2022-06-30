@@ -186,6 +186,6 @@ output to a file:
 cat << END > /opt/openarenaserver/script
 getflag > /tmp/flag
 END
-# wait for the flag fiel to appear (or just spam `cat /tmp/flag` like a retard)
+# wait for the flag file to appear (or just spam `cat /tmp/flag` like a retard)
 while [ ! -f /tmp/flag ]; do sleep 1; done; cat /tmp/flag
 ```
