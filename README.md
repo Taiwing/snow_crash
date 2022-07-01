@@ -448,3 +448,17 @@ curl localhost:4646?x=lol%22%3bptdr%3d%22lol
 # and there you go
 cat /tmp/flag
 ```
+
+## Great answer times 101 (level13)
+
+This level contains our usual setuid binary (decompiled
+[source code](level13/Resources/source.c)). Running it without arguments will
+give this output:
+
+```
+UID 2013 started us but we we expect 4242
+```
+
+This means that our flag a is simple getuid call away from us. All we have to do
+is run the binary through gdb break at the line after the getuid call, set the
+_eax_ register to 4242 and continue.
