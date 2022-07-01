@@ -156,9 +156,6 @@ The perl script at the root the home is a CGI file. It is used to render web
 pages dynamically. The corresponding page, as it is nicely pointed out by the
 comment in the script, is served on localhost:4747.
 
-> If you are using the `vm_launch.bash` script, the 4747 port is mapped to 3333,
-> so you can see the page on localhost:3333.
-
 There is nothing to be showed right now. But like in the last exercise, the perl
 script has the setuid bit on and belongs to flag04. In it we can see a backtick
 syntax with an echo command and what looks like variable substitution with '$y'.
@@ -166,11 +163,10 @@ syntax with an echo command and what looks like variable substitution with '$y'.
 Just give 'x=something' as a get parameter to the page to see 'something' in it
 through the echo command. Since it's a shell command just pass ';getflag' to it:
 
+```shell
+# get the page and the flag ('%3b' is the URL-friendly version of ';')
+curl localhost:4747?x=%3bgetflag
 ```
-http://localhost:3333/?x=%3bgetflag
-```
-
-Where '3b' is the ascii hexcode for ';'. Then see the token on the page :)
 
 ## Be careful what you script for (level05)
 
