@@ -22,7 +22,7 @@ int	main(int argc, char **argv, char **envp)
 	if ((fd = open(argv[1], 0)) < 0) {
 		err(1, "Unable to open %s", argv[1]);
 	}
-	if ((rc = read(fd, buf, 256)) < 0) {
+	if ((rc = read(fd, buf, 1024)) < 0) {
 		err(1, "Unable to read fd %d", fd);
 	}
 	return write(1, buf, rc);
