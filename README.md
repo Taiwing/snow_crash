@@ -190,10 +190,10 @@ while [ ! -f /tmp/flag ]; do sleep 1; done; cat /tmp/flag
 
 The level06 is a setuid binary that takes two arguments and passes them to an
 overly convoluted php script that it executes (see the decompiled
-[source code](level06/Resources/source.c)). It has a regex with the '\e' option,
-which means it evaluates the code inside it as php code and executes it. So this
-is our obvious way in. The less obvious thing is to find what the arguments are
-to exploit the script.
+[source code](level06/Resources/source.c)). The script contains a regex with the
+'\e' option, which means it evaluates the code inside it as php code and
+executes it. So this is our obvious way in. The less obvious thing is to find
+what the arguments are to exploit the script.
 
 The first argument must be a file since the `file_get_contents` function is
 called on it. The second one is a string of php code that will be executed if
