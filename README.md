@@ -462,3 +462,45 @@ UID 2013 started us but we we expect 4242
 This means that our flag a is simple getuid call away from us. All we have to do
 is run the binary through gdb break at the line after the getuid call, set the
 _eax_ register to 4242 and continue.
+
+## Getflag (level14)
+
+This time the home is empty. All we have left to look at is the getflag command.
+It turns out that it is as exploitable as any other snow\_crash binary. Also,
+this is almost the same exploit as the last level. Except that this time we want
+to get flag14's flag, so we need to substitute the result of the getuid call
+with the flag14's uid (which is 3014). Also, getflag actually tests some other
+things before the getuid call, so we should break once on main, diassemble,
+break on the first comparison (cmp) instruction after getuid and set eax to
+flag14's uid. From there we just have to continue and the final flag is ours.
+
+```shell
+# run gdb on the binary
+gdb getflag
+# set a breakpoint at the main function (through gdb's prompt)
+(gdb) b main
+# run the program
+(gdb) run
+# see the assembly code being executed
+(gdb) disass
+```
+
+Scrolling down the instruction list, we can see this:
+
+```
+   0x08048afd <+439>:   call   0x80484b0 <getuid@plt>
+   0x08048b02 <+444>:   mov    %eax,0x18(%esp)
+   0x08048b06 <+448>:   mov    0x18(%esp),%eax
+   0x08048b0a <+452>:   cmp    $0xbbe,%eax
+```
+
+We have the getuid call and the first comparison. Then we get the flag:
+
+```
+(gdb) b *0x8048b0a
+(gdb) jump *0x8048b0a
+(gdb) set $eax = 3014
+(gdb) c
+```
+
+And it's done.
