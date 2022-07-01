@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-int main(int argc,char **argv,char **envp)
+int	main(int argc, char **argv, char **envp)
 {
 	int		fd;
 	ssize_t	rc;
@@ -16,11 +16,11 @@ int main(int argc,char **argv,char **envp)
 		exit(1);
 	}
 	if (strstr(argv[1], "token") != NULL) {
-		printf("You may not access \'%s\'\n", argv[1]);
+		printf("You may not access '%s'\n", argv[1]);
 		exit(1);
 	}
 	if ((fd = open(argv[1], 0)) < 0) {
-		err(1,"Unable to open %s",argv[1]);
+		err(1, "Unable to open %s", argv[1]);
 	}
 	if ((rc = read(fd, buf, 256)) < 0) {
 		err(1, "Unable to read fd %d", fd);
