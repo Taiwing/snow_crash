@@ -248,11 +248,12 @@ env LOGNAME='lol im gonna pown you ez; getflag' ./level07
 ## Hardcode is soft code (level08)
 
 This time we have two files in the home. The usual setuid binary and an
-unreadable token file. The binary takes a filename as input and reads it if we
-can access it. So `./level08 token` won't work. However, the only "access check"
-it does is to compare the argument with a hardcoded "token" string. This means
-that we just have to create a symlink to the token file with a different name
-and read this file instead.
+unreadable token file (see the decompiled
+[source code](level08/Resources/source.c)). The binary takes a filename as input
+and reads it if we can access it. So `./level08 token` won't work. However, the
+only "access check" it does is to compare the argument with a hardcoded "token"
+string. This means that we just have to create a symlink to the token file with
+a different name and read this file instead.
 
 ```shell
 # create a symlink pointing to our token file
