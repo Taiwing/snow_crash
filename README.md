@@ -41,6 +41,10 @@ scp -P 2222 level00@localhost:/etc/passwd .
 john --show passwd
 ```
 
+> If john the ripper is not installed on the machine you are working on, just
+> run `./john.bash passwd` instead of the last line in the above script. This
+> will execute a dockerized version of jtr.
+
 This should output something like that:
 
 ```
