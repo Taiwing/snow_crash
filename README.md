@@ -396,3 +396,17 @@ su flag10
 # get the flag
 getflag
 ```
+
+## A good input is like a good keyboard, it should be sanitized (level11)
+
+This one contains a lua server waiting for a password. It reads user input on
+the port 5151 and directly gives it to an io.popen() call to get its hash. Since
+io.popen() takes a shell command as input and that the server has the setuid bit
+on, we can simply pass it a command to get the flag.
+
+```shell
+# connect to the local server
+nc localhost 5151
+# give this as an input to get the flag
+Im in; getflag > /tmp/flag; chmod 644 /tmp/flag; echo lol
+```
