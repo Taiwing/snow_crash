@@ -3,9 +3,9 @@ First create a file wich contains an expression that will be evaluted by the
 evaluated. Use $z for this. $z is simply the second argument of the ./level06
 command.
 
-So, with the test file created as /tmp/test (that contains the expression to be
+So, with the payload file created as /tmp/payload (that contains the expression to be
 evaluated), run this:
 
-./level06 /tmp/test 'shell_exec("getflag > /tmp/flag");'
+./level06 /tmp/payload 'shell_exec("getflag > /tmp/flag");'
 
 And boom! you get the flag in /tmp!
