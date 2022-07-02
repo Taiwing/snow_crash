@@ -4,6 +4,11 @@ This is a CTF made in 42. The flags, you gotta catch them all. At each level
 there is a way to hack yourself to the next level by finding the flag which is
 the password for the next user.
 
+<br />
+<p align="center">
+	<img src="https://github.com/Taiwing/snow_crash/blob/master/resources/snow_crash.jpg?raw=true" alt="ping-screenshot" style="width: 50%;"/>
+</p>
+
 ## Setup
 
 ```shell
