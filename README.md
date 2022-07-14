@@ -6,7 +6,7 @@ the password for the next user.
 
 <br />
 <p align="center">
-	<img src="https://github.com/Taiwing/snow_crash/blob/master/resources/snow_crash.jpg?raw=true" alt="ping-screenshot" style="width: 50%;"/>
+	<img src="https://github.com/Taiwing/snow_crash/blob/master/resources/snow_crash.jpg?raw=true" alt="snow-crash" style="width: 50%;"/>
 </p>
 
 ## Setup
